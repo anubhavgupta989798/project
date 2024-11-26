@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from app.views import home, login_page, register_page,submit_complaint,user_complaints
 
+# Define URL patterns
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('home/', home, name="home"),      # Home page
+    path("admin/", admin.site.urls),          # Admin interface
+    path('', login_page, name='login_page'),    # Login page
+    path('register/', register_page, name='register'),  # Registration page
+    path('submit/', submit_complaint, name='submit_complaint'),
+    path('my-complaints/', user_complaints, name='my-complaints'),
 ]
+
+# Serve media files if DEBUG is True (development mode)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Serve static files using staticfiles_urlpatterns
+urlpatterns += staticfiles_urlpatterns()

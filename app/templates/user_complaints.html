@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="user-complaints">
+    <h2>My Complaints</h2>
+    {% if complaints %}
+        <div class="list-group">
+        {% for complaint in complaints %}
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ complaint.title }}</h5>
+                    <small>{{ complaint.created_at|date:"F d, Y" }}</small>
+                </div>
+                <p class="mb-1">Status: {{ complaint.get_status_display }}</p>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p class="alert alert-info">You haven't submitted any complaints yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
